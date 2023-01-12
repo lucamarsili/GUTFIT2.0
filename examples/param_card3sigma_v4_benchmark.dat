@@ -1,0 +1,26 @@
+Parameter used for testing typeIandIIseesaw_v4.py, best fit parameters from 2209.00021 Mathematica scan
+
+# Model 4 parameters. Parameters with prefix "data_"
+# are measured and can vary within a range. Parameters with prefix "model4_"
+# are model parameters. Data from PDG + nuFIT. Note that angles are
+# given in radians and mass squared differences of neutrinos are in GeV^2.
+# all masses are in GeV. Here we can in log10(mass [GeV]), also log10(r1),log10(r2),  log10(ce) and log10(cnu) : benchmarkpoint with chi^2
+
+generic_quark_phase_a1 1.1095317
+generic_quark_phase_a2 1.4690057
+data_quark_th12        0.22739
+data_quark_th13        0.004202
+data_quark_th23        0.04858 
+data_quark_delta       1.207 
+data_quark_yu          2.54e-6 
+data_quark_yc          0.00137 
+data_quark_yt          0.428  
+data_quark_yd          0.0000656 
+data_quark_ys          0.000124
+data_quark_yb          0.0057 
+model4_mR	       -10.082 
+model4_r1              -0.01945
+model4_r2              -2.04010
+model4_cnu             -1.9451056
+model4_ce              -8.2100737317
+
