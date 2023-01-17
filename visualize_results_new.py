@@ -63,15 +63,16 @@ def sample(x,E,S,PL,N,pnames):
 
 def load_parameter2():
     points = np.loadtxt("%s/GUTFIT.txt"%args[0])
+    oldscan = np.loadtxt("ParaTable_10.txt")
    # N = len(points[0,:]);
     likelihood = points[:,1]
     Parameters = points[:,2:]
     #print(x[-1])
-    return Parameters, likelihood, points
+    return Parameters, likelihood, points, oldscan
 
 if __name__ == "__main__":
     PL = parameterlist.ParameterList.fromConfigFile(args[1])#"examples/param_card.dat")
-    Parameters, likelihood, points = load_parameter2()
+    Parameters, likelihood, points, oldscan = load_parameter2()
    # x = Visualize.evaluate(parameters)
 
     O = Predictions()
@@ -99,12 +100,15 @@ if __name__ == "__main__":
     x = Parameters[:,3]
     #print(x)
     y = Parameters[:,4]
-    z = -likelihood
+    z = np.log(likelihood)
+    ox = oldscan[:,2]
+    oy = oldscan[:,3]
     
     fig, ax = plt.subplots(1,1,figsize=(10,10))
     normalize = matplotlib.colors.Normalize(vmin=z.min(), vmax= z.max())
-    plot = ax.scatter(x,y,c =z,s = 10, cmap = plt.cm.PuBu, norm = normalize, marker= "o") 
-    ax.set(xlabel = r"$r1$", ylabel= r"$r_2$")
+    plot = ax.scatter(x,y,c =z,s = 10, cmap = plt.cm.PuBu, norm = normalize, marker= "o")
+    ax.scatter(ox,oy,c = 'r', s = 10, marker = "o")
+    ax.set(xlabel = r"$a_1$", ylabel= r"$a_2$")
 
     cax1 = fig.add_axes([0.355, .03, 0.3, 0.05])
     cbar1= fig.colorbar(plot,cax1, orientation = 'horizontal')
@@ -113,10 +117,10 @@ if __name__ == "__main__":
    
     #cbar1.set_label(label = r"$\chi^2$", fontsize=30, weight='bold') 
     cbar1.ax.tick_params(labelsize='large')
-    ax.set_xlim([-0.03, 0.03])
-    ax.set_ylim([-4,-2.5])
+    #ax.set_xlim([-0.03, 0.03])
+    #ax.set_ylim([-4,-2.5])
 
-    plt.savefig("r1r2paperrange500.pdf")
+    plt.savefig("r1r2vsoldscan_160123.pdf")
     print("done")
 
     
