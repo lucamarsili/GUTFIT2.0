@@ -40,9 +40,20 @@ class ExperimentalNeutrinoMassMatrix(model.Model):
                   "data_neutrino_th23",
                   "data_neutrino_th12",
                   "data_neutrino_th13",
-                  "data_neutrino_delta"
+                  "data_neutrino_delta",
+                  "sigma_lepton_ye",
+                  "sigma_lepton_ymu",
+                  "sigma_lepton_ytau",
+                  "sigma_neutrino_th12",
+                  "sigma_neutrino_th13",
+                  "sigma_neutrino_th23",
+                  "sigma_dm21",
+                  "sigma_dm31"
+        ]
+
                   
-                ]
+                  
+                
         super().__init__(params)
 
     @property
@@ -57,13 +68,21 @@ class ExperimentalNeutrinoMassMatrix(model.Model):
                 self.data_neutrino_th23,
                 self.data_neutrino_th12,
                 self.data_neutrino_th13,
-                self.data_neutrino_delta
+                self.data_neutrino_delta,
+                self.sigma_lepton_ye,
+                self.sigma_lepton_ymu,
+                self.sigma_lepton_ytau,
+                self.sigma_neutrino_th23,
+                self.sigma_neutrino_th12,
+                self.sigma_neutrino_th13,
+                self.sigma_dm21,
+                self.sigma_dm31
             )
         )
 
         return value
     
-    def MnuData(self, ye, ymu, ytau, deltamsq21bf,deltamsq31bf, th23l, th12l, th13l, deltal):
+    def MnuData(self, ye, ymu, ytau, deltamsq21bf,deltamsq31bf, th23l, th12l, th13l, deltal, sigmaye, sigmaymu,sigmaytau,sigmath23,sigmath12,sigmath13, sigmadm21, sigmadm31):
         m1logged = 10**m1
         mnudiag  = matrix_diag3(m1logged, np.sqrt(m1logged * m1logged+ deltamsq21bf), np.sqrt(m1logged * m1logged + deltamsq31bf))
         Majorana = matrix_diag3(1, 1,1)
@@ -72,7 +91,7 @@ class ExperimentalNeutrinoMassMatrix(model.Model):
         return np.conj(Vpmns) @ mnudiag @ np.transpose(Vpmns)
     
     
-    def Data(self, ye, ymu, ytau,deltamsq21bf,deltamsq31bf, th23l, th12l, th13l, deltal):
+    def Data(self, ye, ymu, ytau,deltamsq21bf,deltamsq31bf, th23l, th12l, th13l, deltal, sigmaye, sigmaymu,sigmaytau,sigmath23,sigmath12,sigmath13, sigmadm21, sigmadm31):
         D = []
         D.append(th13l)
         D.append(th12l)
@@ -82,6 +101,15 @@ class ExperimentalNeutrinoMassMatrix(model.Model):
         D.append(ye)
         D.append(ymu)
         D.append(ytau)
+        D.append(sigmath13)
+        D.append(sigmath12)
+        D.append(sigmath23)
+        D.append(sigmadm21)
+        D.append(sigmadm31)
+        D.append(sigmaye)
+        D.append(sigmaymu)
+        D.append(sigmaytau)
+       
         D = np.asarray(D)
         return D
        

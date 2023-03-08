@@ -1,8 +1,8 @@
 import numpy as np
 from gutfit import model, parameterlist
-# 29/mar/2022 changed m1 --> 10**mi as parametercard now scans in log10(mass)
 
-#change predictions according to typeseesaw_v4
+
+#change predictions according to typeseesaw_v4 model
 
 def matrix_diag3(d1,d2,d3):
     return np.array([[d1, 0.0, 0.0], [0.0, d2, 0.0], [0.0, 0.0, d3]])
@@ -77,12 +77,11 @@ class ExperimentalNeutrinoMassMatrix(model.Model):
         D.append(th13l)
         D.append(th12l)
         D.append(th23l)
-        D.append(deltamsq21bf*(10**5))
-        D.append(deltamsq31bf*(10**3))
-        D.append(ye*(10**6))
-        D.append(ymu*(10**4))
-        D.append(ytau*(10**2))
-        #print(ytau)
+        D.append(deltamsq21bf)
+        D.append(deltamsq31bf)
+        D.append(ye)
+        D.append(ymu)
+        D.append(ytau)
         D = np.asarray(D)
         return D
        

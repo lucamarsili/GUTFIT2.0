@@ -5,33 +5,9 @@ from gutfit import parameterlist
 
 #Parameters from 1octant non susy, different from param_card3sigma which are second octant
 
-'''
-Ye = 2.7e-6
-Ymu = 5.71e-4
-Ytau = 9.7e-3
-sigma_e = 0.023e-6
-sigma_mu = 0.00557e-4
-sigma_tau = 0.0727e-3
-theta12 = 0.583516667
-theta13 = 0.150371111
-theta23 = 0.734411111
-dm21 = 7.42e-5
-dm31 = 2.514e-3
-sigmatheta12 = 0.013432222
-sigmatheta13 = 0.002093333
-sigmatheta23 = 0.019188889
-sigmadm21 = 0.21e-5
-sigmadm31 = 0.028e-3
-
-'''
-
-#Data = [theta13, theta12, theta23, dm21, dm31,Ye, Ymu, Ytau] 
-#Uncertainties = [sigmatheta13, sigmatheta12,sigmatheta23,sigmadm21,sigmadm31,sigma_e,sigma_mu,sigma_tau]
-#Best fit values from mathematica
 
 
-
-#Current measure: similar to chi squared, fix uncertainties in param_card3sigma_v4.dat
+#Current measure: similar to chi squared, fixed uncertainties in param_card3sigma_v4.dat
 
 #mR logarithmic
 
@@ -53,7 +29,7 @@ def plotting(D, T, measure, fout): #Plot the observable distribution for the bes
                 values = [d[i] for d in D]
                 theos  = [t[i] for t in T]
                 axes[i].hist(theos, bins=100)
-               # axes[i].hist(values, bins=100)
+                axes[i].hist(values, bins=100)
       
     axes[0].set_title(r"$\theta_{13}$")
     axes[1].set_title(r"$\theta_{12}$")
@@ -61,7 +37,6 @@ def plotting(D, T, measure, fout): #Plot the observable distribution for the bes
     axes[3].set_title(r"$\Delta m^2_{21}$")
     axes[4].set_title(r"$\Delta m^2_{31}$")
     axes[5].set_title(r"$m_e$")
-   # axes[5].set_xlim([0.0])
     axes[6].set_title(r"$m_\mu$")
     axes[7].set_title(r"$m_\tau$")
     print(measure)

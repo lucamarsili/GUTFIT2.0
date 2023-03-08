@@ -150,7 +150,7 @@ class Type1And2SeeSaw_v4(model.Model):
         type1p1   = (8 * r2logged * (r2logged+1) * Yu)/(r2logged-1) 
         type1p2   = -(16 * r2logged*r2logged * ReYd)/(r1logged * (r2logged-1))
         type1p3   = ((r2logged-1)/r1logged) * (r1logged * Yu + 1j * cnulogged * ImYd) @ np.linalg.inv(r1logged * Yu - ReYd) @ (r1logged * Yu - 1j * cnulogged * ImYd)
-        type1     = (10**mR) * (type1p1 + type1p2 + type1p3)
+        type1     = (mR) * (type1p1 + type1p2 + type1p3)
         if (testyu == True):
             print("Mnu")
             print(type1*(10**(11)))
@@ -229,7 +229,7 @@ class Type1And2SeeSaw_v4(model.Model):
         f = Yu*(1/(r2logged-1))-ReYd*(1/(r1logged*(r2logged-1)))
         if (testf == True):
             print(f)
-        MN = f*((vSM**2)/(10**mR))*(10**(-11))
+        MN = f*((vSM**2)/(mR))*(10**(-11))
         if (testYnu == True):
             print(MN)
         return MN
@@ -424,7 +424,7 @@ class Predictions(model.Model): #similar class return all the predictions of the
         f = Yu*(1/(r2logged-1))-ReYd*(1/(r1logged*(r2logged-1)))
         if (testf == True):
             print(f)
-        MN = f*((vSM**2)/(10**mR))*(10**(-11))
+        MN = f*((vSM**2)/(mR))*(10**(-11))
         if (testYnu == True):
             print(MN)
         return MN
@@ -474,28 +474,28 @@ if __name__=="__main__":
     PL =  parameterlist.ParameterList.fromConfigFile("../examples/param_card3sigma_v4_benchmark.dat")
    # from IPython import embed
    # embed()
-    print(E.OBS(PL()))
+    #print(E.OBS(PL()))
 
     if (testbenchmark):
         import time
         t0 = time.time()
-        print("theta13_bench = 0.1489607684194921          th: %f" % E(PL())[0])
-        print("theta12_bench = 0.5712806657423788          th: %f" % E(PL())[1])
-        print("theta23_bench = 0.732017203612924         th: %f" % E(PL())[2])
-        print("delta_bench = -2.199033363780465         th: %f" % E(PL())[3])
-        print("a1 th: %f" % E(PL())[4])
-        print("a2 th: %f" % E(PL())[5])
-        print("m1_bench = 3.3594212690227954           th: %f" % E(PL())[6])
-        print("mbetabeta_bench = 5.830868469833373     th: %f" % E(PL())[7])
-        print("msq21 : %f" % E(PL())[8])
-        print("msq31 : %f" % E(PL())[9])
-        print("me : %f" % E(PL())[10])
-        print("mmuon : %f" % E(PL())[11])
-        print("mtau : %f" % E(PL())[12])
+      #  print("theta13_bench = 0.1489607684194921          th: %f" % E(PL())[0])
+       # print("theta12_bench = 0.5712806657423788          th: %f" % E(PL())[1])
+        #print("theta23_bench = 0.732017203612924         th: %f" % E(PL())[2])
+       # print("delta_bench = -2.199033363780465         th: %f" % E(PL())[3])
+       # print("a1 th: %f" % E(PL())[4])
+       # print("a2 th: %f" % E(PL())[5])
+       # print("m1_bench = 3.3594212690227954           th: %f" % E(PL())[6])
+       # print("mbetabeta_bench = 5.830868469833373     th: %f" % E(PL())[7])
+       # print("msq21 : %f" % E(PL())[8])
+        print("msq31 : %f" % E(PL())[4])
+       # print("me : %f" % E(PL())[10])
+       # print("mmuon : %f" % E(PL())[11])
+       # print("mtau : %f" % E(PL())[12])
         #print("m1_bench = th: %f" % E(PL())[6])
-        print("MN1_bench = 4.2292070742425476e11          th: %f" % E(PL())[13])
-        print("MN2_bench = 5.324270909148878e111          th: %f" % E(PL())[14])
-        print("MN3_bench = 1.6654004807249688e13          th: %f" % E(PL())[15])
+       # print("MN1_bench = 4.2292070742425476e11          th: %f" % E(PL())[13])
+        #print("MN2_bench = 5.324270909148878e111          th: %f" % E(PL())[14])
+        #print("MN3_bench = 1.6654004807249688e13          th: %f" % E(PL())[15])
         # print("m1_bench = 3.3594212690227954          th: %f" % E(PL())[11])
         # print("mbb_bench = 5.830868469833373          th: %f" % E(PL())[12])
         

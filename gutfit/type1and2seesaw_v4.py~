@@ -3,8 +3,8 @@ import random
 import math
 from random import randint, choice
 from gutfit import model, parameterlist
-# same as type1and2seesaw_v3.py but now ce is an additional parameter which must be constrained in the multibest file.
 
+#Debug#
 testUPMNS = False
 testf = False
 test1 = False
@@ -14,7 +14,10 @@ testYl = False
 testYnu = False
 testlepto = False
 testneutrino = False
-testbenchmark = False
+testbenchmark = True
+#########################################################################################################################################################################################################################
+
+
 def matrix_diag3(d1,d2,d3):
     return np.array([[d1, 0.0, 0.0], [0.0, d2, 0.0], [0.0, 0.0, d3]], dtype = np.complex64)
 
@@ -81,7 +84,7 @@ class Type1And2SeeSaw_v4(model.Model):
     @property
     def val(self):
         value = np.abs(
-                self.PRED(                         #change method here: call it Observables
+                self.PRED(                         
                     self.generic_quark_phase_a1,
                     self.generic_quark_phase_a2,
                     self.data_quark_th12,
@@ -107,13 +110,15 @@ class Type1And2SeeSaw_v4(model.Model):
         return value
         
    
-    def randomphase(self):
+    def randomphase(self):                                #reparametrize sign for quark yukawa couplings
         self.ydrand  = (2. * random.randint(0, 1) -1.)
         self.ysrand  = (2. * random.randint(0, 1) -1.)
         self.ybrand  = (2. * random.randint(0, 1) -1.)
         self.yurand  = (2. * random.randint(0, 1) -1.)
         self.ycrand  = (2. * random.randint(0, 1) -1.)
         self.ytrand  = (2. * random.randint(0, 1) -1.)
+   
+   
    
     def matrix_Yd(self, a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce):
         Pa      = matrix_phase2(a1, a2)
@@ -129,7 +134,8 @@ class Type1And2SeeSaw_v4(model.Model):
             print(Yukd)
         return  Yukd
 
-
+#Modify the function below for a different model, at the moment used for 2209.00021 model
+   
     def MnuTheory(self, a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce):
         Yd        = self.matrix_Yd(a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce)
         Yu        = matrix_diag3(yu, yc,  -yt)
@@ -149,7 +155,8 @@ class Type1And2SeeSaw_v4(model.Model):
             print("Mnu")
             print(type1*(10**(11)))
         return  type1
-
+ 
+#Modify the function below for a different model, at the moment used for 2209.00021 model
    
     def YlTheory(self,a1,a2,th12q,th13q,th23q,deltaq,yu,yc,yt,yd,ys,yb,mR, r1, r2, cnu,ce):
         Yd = self.matrix_Yd(a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce)
@@ -171,9 +178,8 @@ class Type1And2SeeSaw_v4(model.Model):
             print(Ylepton)
         return Ylepton
    
-###in MixingMatrix np.linalg.eig does not sort eigenvalues, in order to compute UPMNS we then need to order first eigenvalues and eigenvectors and then build Vl
 
-    def MixingMatrix(self,  a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb, mR,r1, r2, cnu, ce):
+    def MixingMatrix(self,  a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb, mR,r1, r2, cnu, ce): #diagonalize both Mnu and Yl, use the method linalg.eigh, ordered eigenvalues
         Mnu = self.MnuTheory(a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb, mR, r1, r2, cnu, ce)*(10**9)
         Ylepton = self.YlTheory(a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb, mR, r1, r2, cnu, ce)
        # leptonmasses, Ul = np.linalg.eig(Ylepton)
@@ -223,12 +229,12 @@ class Type1And2SeeSaw_v4(model.Model):
         f = Yu*(1/(r2logged-1))-ReYd*(1/(r1logged*(r2logged-1)))
         if (testf == True):
             print(f)
-        MN = f*((vSM**2)/(10**mR))*(10**(-11))
+        MN = f*((vSM**2)/(mR))*(10**(-11))
         if (testYnu == True):
             print(MN)
         return MN
 
-    def PRED(self,a1 , a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce):
+    def PRED(self,a1 , a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce): #return observables needed for the scan
         U = self.UPMNS(a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb, mR,r1, r2, cnu, ce)
         lm,nm, Vl, Vnu = self.MixingMatrix(a1, a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb, mR,r1, r2, cnu, ce)
         msq12, msq13 = self.masses(a1 , a2,  th12q, th13q, th23q, deltaq, yu, yc, yt, yd, ys, yb,mR, r1, r2, cnu, ce)
@@ -247,8 +253,8 @@ class Type1And2SeeSaw_v4(model.Model):
         A.append(yyytau)
         A = np.asarray(A)
         return A
-    
-class Predictions(model.Model):
+     
+class Predictions(model.Model): #similar class return all the predictions of the model
     def __init__(self):
         params = [
             "generic_quark_phase_a1",
@@ -418,7 +424,7 @@ class Predictions(model.Model):
         f = Yu*(1/(r2logged-1))-ReYd*(1/(r1logged*(r2logged-1)))
         if (testf == True):
             print(f)
-        MN = f*((vSM**2)/(10**mR))*(10**(-11))
+        MN = f*((vSM**2)/(mR))*(10**(-11))
         if (testYnu == True):
             print(MN)
         return MN
@@ -458,10 +464,6 @@ class Predictions(model.Model):
         O.append(MNmasses[0])
         O.append(MNmasses[1])
         O.append(MNmasses[2])
-
-        #implement phases
-        #implement deltamassessquaredforthescan
-        
         O = np.array(O)
         return O
 
@@ -472,28 +474,28 @@ if __name__=="__main__":
     PL =  parameterlist.ParameterList.fromConfigFile("../examples/param_card3sigma_v4_benchmark.dat")
    # from IPython import embed
    # embed()
-    print(E.OBS(PL()))
+    #print(E.OBS(PL()))
 
     if (testbenchmark):
         import time
         t0 = time.time()
-        print("theta13_bench = 0.1489607684194921          th: %f" % E(PL())[0])
-        print("theta12_bench = 0.5712806657423788          th: %f" % E(PL())[1])
-        print("theta23_bench = 0.732017203612924         th: %f" % E(PL())[2])
-        print("delta_bench = -2.199033363780465         th: %f" % E(PL())[3])
-        print("a1 th: %f" % E(PL())[4])
-        print("a2 th: %f" % E(PL())[5])
-        print("m1_bench = 3.3594212690227954           th: %f" % E(PL())[6])
-        print("mbetabeta_bench = 5.830868469833373     th: %f" % E(PL())[7])
-        print("msq21 : %f" % E(PL())[8])
-        print("msq31 : %f" % E(PL())[9])
-        print("me : %f" % E(PL())[10])
-        print("mmuon : %f" % E(PL())[11])
-        print("mtau : %f" % E(PL())[12])
+      #  print("theta13_bench = 0.1489607684194921          th: %f" % E(PL())[0])
+       # print("theta12_bench = 0.5712806657423788          th: %f" % E(PL())[1])
+        #print("theta23_bench = 0.732017203612924         th: %f" % E(PL())[2])
+       # print("delta_bench = -2.199033363780465         th: %f" % E(PL())[3])
+       # print("a1 th: %f" % E(PL())[4])
+       # print("a2 th: %f" % E(PL())[5])
+       # print("m1_bench = 3.3594212690227954           th: %f" % E(PL())[6])
+       # print("mbetabeta_bench = 5.830868469833373     th: %f" % E(PL())[7])
+       # print("msq21 : %f" % E(PL())[8])
+        print("msq31 : %f" % E(PL())[4])
+       # print("me : %f" % E(PL())[10])
+       # print("mmuon : %f" % E(PL())[11])
+       # print("mtau : %f" % E(PL())[12])
         #print("m1_bench = th: %f" % E(PL())[6])
-        print("MN1_bench = 4.2292070742425476e11          th: %f" % E(PL())[13])
-        print("MN2_bench = 5.324270909148878e111          th: %f" % E(PL())[14])
-        print("MN3_bench = 1.6654004807249688e13          th: %f" % E(PL())[15])
+       # print("MN1_bench = 4.2292070742425476e11          th: %f" % E(PL())[13])
+        #print("MN2_bench = 5.324270909148878e111          th: %f" % E(PL())[14])
+        #print("MN3_bench = 1.6654004807249688e13          th: %f" % E(PL())[15])
         # print("m1_bench = 3.3594212690227954          th: %f" % E(PL())[11])
         # print("mbb_bench = 5.830868469833373          th: %f" % E(PL())[12])
         

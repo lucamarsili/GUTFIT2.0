@@ -98,13 +98,13 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     x = Parameters[:,3]
     #print(x)
-    y = Parameters[:,4]
-    z = -likelihood
+    y = abs(Parameters[:,4])
+    z = np.log(likelihood)
     
     fig, ax = plt.subplots(1,1,figsize=(10,10))
     normalize = matplotlib.colors.Normalize(vmin=z.min(), vmax= z.max())
     plot = ax.scatter(x,y,c =z,s = 10, cmap = plt.cm.PuBu, norm = normalize, marker= "o") 
-    ax.set(xlabel = r"$r1$", ylabel= r"$r_2$")
+    ax.set(xlabel = r"$a_1$", ylabel= r"$a_2$")
 
     cax1 = fig.add_axes([0.355, .03, 0.3, 0.05])
     cbar1= fig.colorbar(plot,cax1, orientation = 'horizontal')
@@ -113,10 +113,10 @@ if __name__ == "__main__":
    
     #cbar1.set_label(label = r"$\chi^2$", fontsize=30, weight='bold') 
     cbar1.ax.tick_params(labelsize='large')
-    ax.set_xlim([-0.03, 0.03])
-    ax.set_ylim([-4,4])
+    #ax.set_xlim([-0.03, 0.03])
+    #ax.set_ylim([-4,-2.5])
 
-    plt.savefig("r1r2paperrange500.pdf")
+    plt.savefig("r1r2_160123.pdf")
     print("done")
 
     
