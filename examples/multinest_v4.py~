@@ -1,9 +1,11 @@
 from gutfit.experimentalneutrinomassmatrix import ExperimentalNeutrinoMassMatrix
-from gutfit.type1and2seesaw_v4 import Type1And2SeeSaw_v4
+from gutfit.type1and2seesaw_v4_sign import Type1And2SeeSaw_v4
 from gutfit import parameterlist
 #Try to use the battacharruia measure in order to confront two distribution
 
 #Parameters from 1octant non susy, different from param_card3sigma which are second octant
+
+'''
 Ye = 2.7e-6
 Ymu = 5.71e-4
 Ytau = 9.7e-3
@@ -21,9 +23,10 @@ sigmatheta23 = 0.019188889
 sigmadm21 = 0.21e-5
 sigmadm31 = 0.028e-3
 
+'''
 
-Data = [theta13, theta12, theta23, dm21, dm31,Ye, Ymu, Ytau] 
-Uncertainties = [sigmatheta13, sigmatheta12,sigmatheta23,sigmadm21,sigmadm31,sigma_e,sigma_mu,sigma_tau]
+#Data = [theta13, theta12, theta23, dm21, dm31,Ye, Ymu, Ytau] 
+#Uncertainties = [sigmatheta13, sigmatheta12,sigmatheta23,sigmadm21,sigmadm31,sigma_e,sigma_mu,sigma_tau]
 #Best fit values from mathematica
 
 
@@ -128,23 +131,31 @@ def sample(x,E,S,PL,N,pnames): #Creates a distribution with N points for theory 
 #Current measure use only DS and DT, similar to chi square
 def measure(D, T): 
   
-    DS =[   abs(np.mean([t[0] for t in T]) - Data[0]),
-	    abs(np.mean([t[1] for t in T]) - Data[1]),
-    	    abs(np.mean([t[2] for t in T]) - Data[2]),
-    	    abs(np.mean([t[3] for t in T]) - Data[3]),
-    	    abs(np.mean([t[4] for t in T]) - Data[4]),
-    	    abs(np.mean([t[5] for t in T]) - Data[5]),
-    	    abs(np.mean([t[6] for t in T]) - Data[6]),
-    	    abs(np.mean([t[7] for t in T]) - Data[7])
+    DS =[   abs(np.mean([t[0] for t in T]) - [d[0] for d in D][0]),
+	    abs(np.mean([t[1] for t in T]) - [d[1] for d in D][0]),
+    	    abs(np.mean([t[2] for t in T]) - [d[2] for d in D][0]),
+    	    abs(np.mean([t[3] for t in T]) - [d[3] for d in D][0]),
+    	    abs(np.mean([t[4] for t in T]) - [d[4] for d in D][0]),
+    	    abs(np.mean([t[5] for t in T]) - [d[5] for d in D][0]),
+    	    abs(np.mean([t[6] for t in T]) - [d[6] for d in D][0]),
+    	    abs(np.mean([t[7] for t in T]) - [d[7] for d in D][0])
     ]
-    #print(abs(np.mean([t[4] for t in T])))
-    print("Benchmark predictions")
-    print([np.mean([t[3] for t in T]), np.mean([t[4] for t in T]),np.mean([t[5] for t in T]),np.mean([t[6] for t in T]),np.mean([t[7] for t in T])])
-    print("Data")
-    print(Data[3:])
-    #print(Data[4])
+
+    #FIND a WAY TO IMPLEMENT UNCERTAINTIES DEBUG
+
+    UNC = [np.mean([d[8] for d in D]),
+           np.mean([d[9] for d in D]),
+           np.mean([d[10] for d in D]),
+           np.mean([d[11] for d in D]),
+           np.mean([d[12] for d in D]),
+           np.mean([d[13] for d in D]),
+           np.mean([d[14] for d in D]),
+           np.mean([d[15] for d in D]),
+
+    ]
+
     from functools import reduce
-    return sum([(d*d)/(i*i) for d,i in zip(DS, Uncertainties)]) # works technically
+    return sum([(d*d)/(i*i) for d,i in zip(DS, UNC)]) # works technically
 
 
 #discrete points just activate again the rephasing, multimodal mode of multinest should distinguish the different regions if we are interested in the signs
@@ -185,7 +196,7 @@ if __name__=="__main__":
     E  = ExperimentalNeutrinoMassMatrix()
     S  = Type1And2SeeSaw_v4()
     PL = parameterlist.ParameterList.fromConfigFile(args[0])
-    N  = 5 # number of samples of PL
+    N  = 1 # number of samples of PL
     
     if len(args) > 1:
         pdict        =   readparameter(args[1])

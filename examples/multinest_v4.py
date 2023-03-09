@@ -1,5 +1,5 @@
 from gutfit.experimentalneutrinomassmatrix import ExperimentalNeutrinoMassMatrix
-from gutfit.type1and2seesaw_v4 import Type1And2SeeSaw_v4
+from gutfit.type1and2seesaw_v4_sign import Type1And2SeeSaw_v4
 from gutfit import parameterlist
 #Try to use the battacharruia measure in order to confront two distribution
 
@@ -52,8 +52,8 @@ def plotting(D, T, measure, fout): #Plot the observable distribution for the bes
     for i in range(8):
                 values = [d[i] for d in D]
                 theos  = [t[i] for t in T]
-                axes[i].hist(theos, bins=100)
-               # axes[i].hist(values, bins=100)
+                axes[i].hist(theos, bins=1)
+                axes[i].hist(values, bins=1)
       
     axes[0].set_title(r"$\theta_{13}$")
     axes[1].set_title(r"$\theta_{12}$")
@@ -203,7 +203,8 @@ if __name__=="__main__":
         pnames       = [ k for k,v in pdict.items() ]
         D, T, DUMMY  = sample([pdict[pn] for pn in pnames] ,E,S,PL,10*N, pnames)
         valuemeasure = measure(D,T)
-        plotting(D, T, valuemeasure, args[2])
+        print(valuemeasure)
+        #plotting(D, T, valuemeasure, args[2])
     else:
         
     

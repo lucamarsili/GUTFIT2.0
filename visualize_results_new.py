@@ -97,9 +97,9 @@ if __name__ == "__main__":
     #plot
     import matplotlib
     import matplotlib.pyplot as plt
-    x = Parameters[:,3]
+    x = Parameters[:,4]
     #print(x)
-    y = Parameters[:,4]
+    y = Parameters[:,5]
     z = np.log(likelihood)
     ox = oldscan[:,2]
     oy = oldscan[:,3]
