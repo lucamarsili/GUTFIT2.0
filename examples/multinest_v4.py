@@ -1,5 +1,5 @@
 from gutfit.experimentalneutrinomassmatrix import ExperimentalNeutrinoMassMatrix
-from gutfit.type1and2seesaw_v4_sign import Type1And2SeeSaw_v4
+from gutfit.type1and2seesaw_v4_SUSY import Type1And2SeeSaw_v4
 from gutfit import parameterlist
 #Try to use the battacharruia measure in order to confront two distribution
 
