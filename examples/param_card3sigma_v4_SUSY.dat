@@ -27,8 +27,8 @@ data_lepton_ye         2.3413e-6
 data_lepton_ymu        4.94267e-4 
 data_lepton_ytau       8.43231e-3 
 model4_mR              -12    -9
-model4_r1              0.15      5   #linear
-model4_r2              -1        4    #log
+model4_r1              0.15      5   
+model4_r2              -1        4    
 model4_cnu             -2.0      2.0
 model4_ce              -2.0      2.0
 data_neutrino_deltamsq21bf 7.42e-5 
