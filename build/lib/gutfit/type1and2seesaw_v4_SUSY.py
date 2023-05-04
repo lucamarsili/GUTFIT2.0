@@ -17,6 +17,8 @@ testneutrino = False
 testbenchmark = False
 testsign = False
 
+#r1,r2 log scan, ce,cnu mo, log as well
+
 #########################################################################################################################################################################################################################
 #INVERTED ORDERING WHEN THIS VARIABLE IS TRUE
 
@@ -325,7 +327,7 @@ Attributes:
         ImYd      = np.imag(Yd)
         cnulogged = 10**cnu
         r2logged  = 10**r2
-        r1logged  = r1
+        r1logged  = 10**r1
         ydrand    = yd
         ysrand    = -ys
         ybrand    =  yb
@@ -372,7 +374,7 @@ Attributes:
         ImYd = np.imag(Yd)
         celogged = 10**ce
         r2logged  = 10**r2
-        r1logged  = r1
+        r1logged  = 10**r1
         ydrand    = yd
         ysrand    = -ys
         ybrand    =  yb
@@ -633,7 +635,7 @@ class Predictions(model.Model): #similar class return all the predictions of the
         ImYd      = np.imag(Yd)
         cnulogged = 10**cnu
         r2logged  = 10**r2
-        r1logged  = r1
+        r1logged  = 10**r1
         ydrand    = yd
         ysrand    = -ys
         ybrand    =  yb
@@ -656,7 +658,7 @@ class Predictions(model.Model): #similar class return all the predictions of the
         ImYd = np.imag(Yd)
         celogged = 10**ce
         r2logged  = 10**r2
-        r1logged  = r1
+        r1logged  = 10**r1
         ydrand    = yd
         ysrand    = -ys
         ybrand    =  yb

@@ -1,5 +1,5 @@
 from gutfit.experimentalneutrinomassmatrix import ExperimentalNeutrinoMassMatrix
-from gutfit.type1and2seesaw_v4_SUSY import Type1And2SeeSaw_v4
+from gutfit.type1and2seesaw_v4_sign_lin import Type1And2SeeSaw_v4
 from gutfit import parameterlist
 #Try to use the battacharruia measure in order to confront two distribution
 
@@ -183,11 +183,23 @@ if __name__=="__main__":
 
     opts, args = op.parse_args()
 
+    
+    # Output directory
+    rank=0
+    try:
+        from mpi4py import MPI
+        comm = MPI.COMM_WORLD
+        size = comm.Get_size()
+        rank = comm.Get_rank()
+    except Exception as e:
+        print("MPI (mpi4py) is not available (try e.g. pip install mpi4py), proceeding serially:", e)
+        size = 1
 
     try:
         os.makedirs(opts.OUTPUT)
     except:
         pass
+    
 
 
 
@@ -258,36 +270,39 @@ if __name__=="__main__":
                 seed=opts.SEED,
                 outputfiles_basename='%s/GUTFIT'%opts.OUTPUT)
 
-        import json
-        json.dump(pnames, open('%s/GUTFITparams.json'%opts.OUTPUT, 'w'))
-        json.dump(pnames, open('%s/params.json'%opts.OUTPUT, 'w'))
+        if (rank ==0):
+        
+                import json
+                json.dump(pnames, open('%s/GUTFITparams.json'%opts.OUTPUT, 'w'))
+                json.dump(pnames, open('%s/params.json'%opts.OUTPUT, 'w'))
 
-        NP = len(pnames)
-        print("Now analyzing output from {}/GUTFIT.txt".format(opts.OUTPUT))
+                NP = len(pnames)
+                print("Now analyzing output from {}/GUTFIT.txt".format(opts.OUTPUT))
         
         
-        a = pymultinest.Analyzer(n_params = NP, outputfiles_basename='%s/GUTFIT'%opts.OUTPUT)
-        a.get_data()
-        try:
-            s = a.get_stats()
-        except:
-            print("There was an error accumulating statistics. Try increasing the number of iterations, e.g. --mn-iterations -1")
-            sys.exit(1)
+                a = pymultinest.Analyzer(n_params = NP, outputfiles_basename='%s/GUTFIT'%opts.OUTPUT)
+                a.get_data()
+                try:
+                    s = a.get_stats()
+                except:
+                    print("There was an error accumulating statistics. Try increasing the number of iterations, e.g. --mn-iterations -1")
+                    sys.exit(1)
 
-        from collections import OrderedDict
-        resraw = a.get_best_fit()["parameters"]
-        D, T, DUMMY  = sample(resraw ,E,S,PL,10*N, pnames)
-        bestval=measure(D,T)
-        PP=OrderedDict.fromkeys(pnames)
-        for num, pname in enumerate(pnames): PP[pname] = resraw[num]
-        out="# Best fit point (measure: {}):\n".format(bestval)
-        for k in PP: out+= "%s %.16f\n"%(k,PP[k])
-        with open("%sconfig.best"%a.outputfiles_basename, "w") as f: f.write(out)
-        print(out)
+                from collections import OrderedDict
+                resraw = a.get_best_fit()["parameters"]
+                D, T, DUMMY  = sample(resraw ,E,S,PL,10*N, pnames)
+                bestval=measure(D,T)
+                PP=OrderedDict.fromkeys(pnames)
+                for num, pname in enumerate(pnames): PP[pname] = resraw[num]
+                out="# Best fit point (measure: {}):\n".format(bestval)
+                for k in PP: out+= "%s %.16f\n"%(k,PP[k])
+                with open("%sconfig.best"%a.outputfiles_basename, "w") as f: f.write(out)
+                print(out)
 
-        print("Measure at best fit point is {}".format(bestval))
+                print("Measure at best fit point is {}".format(bestval))
         
-        plotting(D, T, bestval, "Bestfitoverlap.pdf")
-
+                plotting(D, T, bestval, "Bestfitoverlap.pdf")
+        else: 
+            print("Altri rank")
         
 

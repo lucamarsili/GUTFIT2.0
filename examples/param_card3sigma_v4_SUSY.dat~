@@ -13,33 +13,33 @@
 sign_parameter         0 1
 generic_quark_phase_a1 0 6.28
 generic_quark_phase_a2 0 6.28
-data_quark_th12        0.225008 
-data_quark_th13        0.00379409
-data_quark_th23        0.0430004
-data_quark_delta       1.14399
-data_quark_yu          2.94515e-6
-data_quark_yc          0.00144418
-data_quark_yt          0.483793 
-data_quark_yd          5.70793e-6
-data_quark_ys          0.000113048
-data_quark_yb          0.00592232
-data_lepton_ye         2.3413e-6 
-data_lepton_ymu        4.94267e-4 
-data_lepton_ytau       8.43231e-3 
-model4_mR              -12    -9
-model4_r1              0.15      5   #linear
-model4_r2              -1        4    #log
-model4_cnu             -2.0      2.0
-model4_ce              -2.0      2.0
+data_quark_th12        0.225003 
+data_quark_th13        0.00372912
+data_quark_th23        0.0422637
+data_quark_delta       1.144
+data_quark_yu          2.96877e-6
+data_quark_yc          0.00145577
+data_quark_yt          0.494057
+data_quark_yd          5.61938e-6
+data_quark_ys          0.00011298
+data_quark_yb          0.00593357
+data_lepton_ye         2.28598e-6 
+data_lepton_ymu        4.82589e-4 
+data_lepton_ytau       8.235e-3 
+model4_mR              -15    -9
+model4_r1              -3.2      -1.5   
+model4_r2              -1        4    
+model4_cnu             -1.0      2.0
+model4_ce              -1.0      2.0
 data_neutrino_deltamsq21bf 7.42e-5 
 data_neutrino_deltamsq31bf 2.510e-3 
 data_neutrino_th23  0.734411111 
 data_neutrino_th12  0.583516667 
 data_neutrino_th13  0.150371111
 data_neutrino_delta 3.4033920413889400    3.857177646907470      1.5533430342749500    3.857177646907470      1.5533430342749500
-sigma_lepton_ye 3.45936e-09
-sigma_lepton_ymu  7.30316e-07
-sigma_lepton_ytau  0.0000125409
+sigma_lepton_ye 0.114299e-6
+sigma_lepton_ymu 0.00002419
+sigma_lepton_ytau  0.00041175
 sigma_neutrino_th12  0.013432222
 sigma_neutrino_th13  0.002093333
 sigma_neutrino_th23  0.019188889

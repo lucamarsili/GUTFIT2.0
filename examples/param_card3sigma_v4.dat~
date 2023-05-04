@@ -10,7 +10,7 @@
 # all masses are in GeV. Here we can in log10(mass [GeV]), also log10(r1),log10(r2),  log10(ce) and log10(cnu)
 
 
-sign_parameter         0
+sign_parameter         0 1
 generic_quark_phase_a1 0.8722 1.7444
 generic_quark_phase_a2 0.8722 1.7444
 data_quark_th12        0.22739 
@@ -26,11 +26,11 @@ data_quark_yb          0.0057
 data_lepton_ye         2.7e-6 
 data_lepton_ymu        5.71e-4 
 data_lepton_ytau       9.7e-3 
-model4_mR              5e-11     15e-11
-model4_r1              -3.0e-2      3.0e-2 
-model4_r2              -5.0       5.0
+model4_mR              -12     -9
+model4_r1              -3      0 
+model4_r2              -2       4
 model4_cnu             	-2.0      2.0
-model4_ce              -10.0      -8.0
+model4_ce              -1      2
 data_neutrino_deltamsq21bf 7.42e-5 
 data_neutrino_deltamsq31bf 2.510e-3 
 data_neutrino_th23  0.734411111 

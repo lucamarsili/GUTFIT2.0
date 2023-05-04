@@ -200,7 +200,7 @@ class Type1And2SeeSaw_v4(model.Model):
         ReYd      = np.real(Yd)
         ImYd      = np.imag(Yd)
         cnulogged = cnu
-        r2logged  = r2
+        r2logged  = 10**r2
         r1logged  = r1
         ydrand    = yd
         ysrand    = -ys
@@ -208,7 +208,7 @@ class Type1And2SeeSaw_v4(model.Model):
         type1p1   = (8 * r2logged * (r2logged+1) * Yu)/(r2logged-1) 
         type1p2   = -(16 * r2logged*r2logged * ReYd)/(r1logged * (r2logged-1))
         type1p3   = ((r2logged-1)/r1logged) * (r1logged * Yu + 1j * cnulogged * ImYd) @ np.linalg.inv(r1logged * Yu - ReYd) @ (r1logged * Yu - 1j * cnulogged * ImYd)
-        type1     = (mR) * (type1p1 + type1p2 + type1p3)
+        type1     = (10**mR) * (type1p1 + type1p2 + type1p3)
         if (testyu == True):
             #print("Mnu")
             #print(Yu)
@@ -223,13 +223,13 @@ class Type1And2SeeSaw_v4(model.Model):
         ReYd = np.real(Yd)
         ImYd = np.imag(Yd)
         celogged = ce
-        r2logged  = r2
+        r2logged  = 10**r2
         r1logged  = r1
         ydrand    = yd
         ysrand    = -ys
         ybrand    =  yb
-        part1 = -(4*r1*Yu)/(r2-1)
-        part2 = ((r2+3)*ReYd)/(r2-1)
+        part1 = -(4*r1logged*Yu)/(r2logged-1)
+        part2 = ((r2logged+3)*ReYd)/(r2logged-1)
         part3 = 1j*celogged*ImYd
         Ylepton = part1+part2+part3
         if (testYl==True):
@@ -279,7 +279,7 @@ class Type1And2SeeSaw_v4(model.Model):
         ReYd = np.real(Yd)
         ImYd = np.imag(Yd)
         celogged = ce
-        r2logged  = r2
+        r2logged  = 10**r2
         r1logged  = r1
         ydrand    = yd
         ysrand    = -ys
@@ -288,7 +288,7 @@ class Type1And2SeeSaw_v4(model.Model):
         f = Yu*(1/(r2logged-1))-ReYd*(1/(r1logged*(r2logged-1)))
         if (testf == True):
             print(f)
-        MN = f*((vSM**2)/(mR))*(10**(-11))
+        MN = f*((vSM**2)/(10**mR))*(10**(-11))
         if (testYnu == True):
             print(MN)
         return MN
