@@ -13,7 +13,9 @@ gutfit/test_parameterlist.py
 gutfit/tools.py
 gutfit/type1and2seesaw_v4.py
 gutfit/type1and2seesaw_v4_SUSY.py
+gutfit/type1and2seesaw_v4_SUSY_lin.py
 gutfit/type1and2seesaw_v4_sign.py
+gutfit/type1and2seesaw_v4_sign_lin.py
 gutfit.egg-info/PKG-INFO
 gutfit.egg-info/SOURCES.txt
 gutfit.egg-info/dependency_links.txt

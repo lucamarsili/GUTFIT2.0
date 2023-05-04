@@ -52,24 +52,35 @@ def sample(x,E,S,PL,N,pnames):
 
 
 def load_parameter2():
-    N_throwaway = 100000 #make the code faster to test, set to zero for official esults
+    N_throwaway = 0 #make the code faster to test, set to zero for official esults
     points = np.loadtxt("%s/GUTFIT.txt"%args[0])
-    oldscan = np.loadtxt("ParaTable_10.txt")
+#    oldscan = np.loadtxt("ParaTable_10.txt")
    # N = len(points[0,:]);
     likelihood = points[N_throwaway:,1]
     Parameters = points[N_throwaway:,2:]
     #print(x[-1])
+
     print(len(likelihood))
-    return Parameters, likelihood, points, oldscan
+    return Parameters, likelihood, points
 
 if __name__ == "__main__":
     PL = parameterlist.ParameterList.fromConfigFile(args[1])#"examples/param_card.dat")
-    Parameters, likelihood, points, oldscan = load_parameter2()
+    Parameters, likelihood, points = load_parameter2()
    # x = Visualize.evaluate(parameters)
-
+    rank=0
+    print("Here starts MPI")
+    try:
+        from mpi4py import MPI
+        comm = MPI.COMM_WORLD
+        size = comm.Get_size()
+        rank = comm.Get_rank()
+    except Exception as e:
+        print("MPI (mpi4py) is not available (try e.g. pip install mpi4py), proceeding serially:", e)
+        size = 1
+    	
     O = Predictions()
     E = ExperimentalNeutrinoMassMatrix()
-
+	
     usethese = []
     Observations = []
     bounds, pnames = PL.getBox(usethese)
@@ -78,19 +89,18 @@ if __name__ == "__main__":
         #print(PP)
         D, T, isgood = sample(PP,E, O, PL, 1, pnames)
         Observations.append(T[0])
-        #print(T[0])
-
-    Observations = np.asarray(Observations)
-    #print(Observations)[:,-1]
-   # print(Observations)
-    np.savetxt('%s/GUTFITpredictions.txt'%args[0], Observations)
-    np.savetxt('%s/GUTFITpara.txt'%args[0],Parameters)
-    np.savetxt('%s/GUTFITlikelihood.txt'%args[0],likelihood)
-    print("Predictions saved in: %s/GUTFITpredictions.txt")
+        print(T[0])
+    if rank == 0:
+        Observations = np.asarray(Observations)
+        np.savetxt('%s/GUTFITpredictions.txt'%args[0], Observations)
+ #   	np.savetxt('%s/GUTFITpredictions.txt'%args[0], Observations)
+  #  	np.savetxt('%s/GUTFITpara.txt'%args[0],Parameters)
+   # 	np.savetxt('%s/GUTFITlikelihood.txt'%args[0],likelihood)
+    #	print("Predictions saved in: %s/GUTFITpredictions.txt")
     
-    print("Parameters saved in: %s/GUTFITpara.txt")
+    #	print("Parameters saved in: %s/GUTFITpara.txt")
     
-    print("Likelihood saved in: %s/GUTFITlikelihood.txt")
-    #plot
+    #	print("Likelihood saved in: %s/GUTFITlikelihood.txt")
+    	#plot
     
     

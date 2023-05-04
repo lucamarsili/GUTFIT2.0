@@ -1,10 +1,9 @@
 # Best fit point benchmark (measure: 4.037129103950948e-07):
-generic_quark_phase_a1 1.10953
-generic_quark_phase_a2 1.4690
-model4_mR 8.28e-11
-model4_r1 -0.0194453
-model4_r2 -2.04010
-model4_cnu -1.9451056
-model4_ce -8.2100737317
-data_neutrino_alpha21 0
-data_neutrino_alpha31 0
+sign_parameter 0.3281921259154154
+generic_quark_phase_a1 0.6501004067515683
+generic_quark_phase_a2 2.2199101896847577
+model4_mR -11.9946334525649494
+model4_r1 -2.1410341217310407
+model4_r2 -0.4913779483066459
+model4_cnu 1.1516604690271977
+model4_ce 0.2311403323672314
